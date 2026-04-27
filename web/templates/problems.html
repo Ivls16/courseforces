@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Задачи — CourseForces{% endblock %}
+{% block content %}
+<hgroup>
+  <h2>Все задачи</h2>
+  {% if session.get('role') in ('ADMIN', 'JUDGE') %}
+  <a href="{{ url_for('new_problem') }}" role="button" style="float:right">+ Создать задачу</a>
+  {% endif %}
+</hgroup>
+
+{% if problems %}
+<table>
+  <thead>
+    <tr><th>#</th><th>Название</th><th>Лимит вр.</th><th>Лимит пам.</th></tr>
+  </thead>
+  <tbody>
+    {% for p in problems %}
+    <tr>
+      <td>{{ p.id }}</td>
+      <td><a href="{{ url_for('problem_standalone', pid=p.id) }}">{{ p.title }}</a></td>
+      <td>{{ p.time_limit_ms }} мс</td>
+      <td>{{ p.memory_limit_mb }} МБ</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Задач пока нет.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Контесты — CourseForces{% endblock %}
+{% block content %}
+<hgroup>
+  <h2>Контесты</h2>
+  {% if session.get('role') == 'ADMIN' %}
+  <a href="{{ url_for('new_contest') }}" role="button" style="float:right">+ Создать контест</a>
+  {% endif %}
+</hgroup>
+
+{% if contests %}
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Название</th>
+      <th>Начало</th>
+      <th>Конец</th>
+      <th>Задачи</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in contests %}
+    <tr>
+      <td>{{ c.id }}</td>
+      <td><a href="{{ url_for('contest', cid=c.id) }}">{{ c.title }}</a></td>
+      <td>{{ c.start_time | datetimeformat }}</td>
+      <td>{{ c.end_time | datetimeformat }}</td>
+      <td>{{ c.problem_ids | length }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Контестов пока нет.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ contest.title }} — CourseForces{% endblock %}
+{% block content %}
+<hgroup>
+  <h2>{{ contest.title }}</h2>
+  <p>
+    {{ contest.start_time | datetimeformat }} — {{ contest.end_time | datetimeformat }}
+  </p>
+</hgroup>
+
+<h3>Задачи</h3>
+{% if problems %}
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Название</th>
+      <th>Лимит времени</th>
+      <th>Лимит памяти</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in problems %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>
+        <a href="{{ url_for('problem', cid=contest.id, pid=p.id) }}">{{ p.title }}</a>
+      </td>
+      <td>{{ p.time_limit_ms }} мс</td>
+      <td>{{ p.memory_limit_mb }} МБ</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>В контесте нет задач.</p>
+{% endif %}
+{% endblock %}

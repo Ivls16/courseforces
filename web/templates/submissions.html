@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Мои посылки — CourseForces{% endblock %}
+{% block content %}
+<h2>Мои посылки</h2>
+
+{% if submissions %}
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Задача</th>
+      <th>Контест</th>
+      <th>Язык</th>
+      <th>Вердикт</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in submissions %}
+    <tr>
+      <td><a href="{{ url_for('submission', sid=s.id) }}">#{{ s.id }}</a></td>
+      <td>#{{ s.problem_id }}</td>
+      <td>{% if s.contest_id %}#{{ s.contest_id }}{% else %}—{% endif %}</td>
+      <td>{{ s.language }}</td>
+      <td><span class="verdict-{{ s.verdict }}">{{ s.verdict }}</span></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Посылок пока нет.</p>
+{% endif %}
+{% endblock %}

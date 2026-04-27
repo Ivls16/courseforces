@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Вход — CourseForces{% endblock %}
+{% block content %}
+<article style="max-width:400px; margin:4rem auto;">
+  <hgroup>
+    <h2>Вход</h2>
+    <p>Введите логин и пароль</p>
+  </hgroup>
+  <form method="post">
+    <label>Логин
+      <input type="text" name="username" required autofocus>
+    </label>
+    <label>Пароль
+      <input type="password" name="password" required>
+    </label>
+    <button type="submit">Войти</button>
+  </form>
+  <p style="text-align:center; margin-top:1rem;">
+    Нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрироваться</a>
+  </p>
+</article>
+{% endblock %}

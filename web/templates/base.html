@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CourseForces{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <style>
+    body { padding-top: 1rem; }
+    nav .brand { font-weight: bold; font-size: 1.1rem; text-decoration: none; color: inherit; }
+    .verdict-AC  { color: var(--pico-color-green-500); font-weight: bold; }
+    .verdict-WA  { color: var(--pico-color-red-500);   font-weight: bold; }
+    .verdict-TLE { color: var(--pico-color-orange-500); font-weight: bold; }
+    .verdict-MLE { color: var(--pico-color-orange-500); font-weight: bold; }
+    .verdict-CE  { color: var(--pico-color-grey-500);  font-weight: bold; }
+    .verdict-RE  { color: var(--pico-color-red-400);   font-weight: bold; }
+    .verdict-PENDING { color: var(--pico-color-blue-500); }
+    pre.code-block { background: var(--pico-code-background-color); padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+<header class="container">
+  <nav>
+    <ul>
+      <li><a href="{{ url_for('contests') }}" class="brand">CourseForces</a></li>
+    </ul>
+    <ul>
+      <li><a href="{{ url_for('contests') }}">Контесты</a></li>
+      <li><a href="{{ url_for('problems_list') }}">Задачи</a></li>
+      {% if session.get('user_id') %}
+      <li><a href="{{ url_for('submissions') }}">Мои посылки</a></li>
+      {% endif %}
+      {% if session.get('role') in ('ADMIN', 'JUDGE') %}
+      <li><a href="{{ url_for('new_problem') }}">+ Задача</a></li>
+      {% endif %}
+      {% if session.get('role') == 'ADMIN' %}
+      <li><a href="{{ url_for('new_contest') }}">+ Контест</a></li>
+      {% endif %}
+    </ul>
+    <ul>
+      {% if session.get('username') %}
+      <li><span>{{ session.username }} ({{ session.role }})</span></li>
+      <li><a href="{{ url_for('logout') }}" role="button" class="secondary outline">Выйти</a></li>
+      {% else %}
+      <li><a href="{{ url_for('login') }}" role="button" class="outline">Войти</a></li>
+      <li><a href="{{ url_for('register') }}" role="button">Регистрация</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</header>
+
+<main class="container">
+  {% for cat, msg in get_flashed_messages(with_categories=True) %}
+  <div role="alert" class="{{ 'pico-background-green-50' if cat == 'success' else 'pico-background-red-50' }}" style="padding:.75rem 1rem; border-radius:6px; margin-bottom:1rem;">
+    {{ msg }}
+  </div>
+  {% endfor %}
+
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>

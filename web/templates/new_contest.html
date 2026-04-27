@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Новый контест — CourseForces{% endblock %}
+{% block content %}
+<h2>Создать контест</h2>
+<form method="post">
+  <label>Название
+    <input type="text" name="title" required autofocus>
+  </label>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+    <label>Начало
+      <input type="datetime-local" name="start_time" required>
+    </label>
+    <label>Конец
+      <input type="datetime-local" name="end_time" required>
+    </label>
+  </div>
+
+  <fieldset>
+    <legend>Задачи</legend>
+    {% for p in problems %}
+    <label>
+      <input type="checkbox" name="problem_ids" value="{{ p.id }}">
+      #{{ p.id }} — {{ p.title }}
+    </label>
+    {% else %}
+    <p>Нет доступных задач. <a href="{{ url_for('new_problem') }}">Создайте задачу</a> сначала.</p>
+    {% endfor %}
+  </fieldset>
+
+  <button type="submit">Создать контест</button>
+</form>
+{% endblock %}

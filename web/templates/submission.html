@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Сабмит #{{ sub.id }} — CourseForces{% endblock %}
+{% block content %}
+<hgroup>
+  <h2>Сабмит #{{ sub.id }}</h2>
+</hgroup>
+
+<table>
+  <tbody>
+    <tr><th>Вердикт</th>
+        <td><span class="verdict-{{ sub.verdict }}">{{ sub.verdict }}</span></td></tr>
+    <tr><th>Задача</th>  <td>#{{ sub.problem_id }}</td></tr>
+    <tr><th>Пользователь</th><td>#{{ sub.user_id }}</td></tr>
+    <tr><th>Язык</th>    <td>{{ sub.language }}</td></tr>
+    {% if sub.contest_id %}<tr><th>Контест</th><td>#{{ sub.contest_id }}</td></tr>{% endif %}
+  </tbody>
+</table>
+
+{% if sub.verdict == 'CE' and sub.compile_error %}
+<section>
+  <h4>Ошибка компиляции</h4>
+  <pre class="code-block">{{ sub.compile_error }}</pre>
+</section>
+{% endif %}
+
+{% if sub.per_case %}
+<section>
+  <h4>Тест-кейсы</h4>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Вердикт</th><th>Вывод</th><th>Ожидалось</th></tr>
+    </thead>
+    <tbody>
+      {% for tc in sub.per_case %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td><span class="verdict-{{ tc.verdict }}">{{ tc.verdict }}</span></td>
+        <td><pre style="margin:0; font-size:.8rem;">{{ tc.actual }}</pre></td>
+        <td><pre style="margin:0; font-size:.8rem;">{{ tc.expected }}</pre></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+
+<details>
+  <summary>Исходный код</summary>
+  <pre class="code-block">{{ sub.code }}</pre>
+</details>
+{% endblock %}

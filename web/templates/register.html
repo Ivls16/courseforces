@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Регистрация — CourseForces{% endblock %}
+{% block content %}
+<article style="max-width:400px; margin:4rem auto;">
+  <hgroup>
+    <h2>Регистрация</h2>
+  </hgroup>
+  <form method="post">
+    <label>Логин
+      <input type="text" name="username" required autofocus>
+    </label>
+    <label>Пароль
+      <input type="password" name="password" required>
+    </label>
+    <label>Роль
+      <select name="role">
+        <option value="PARTICIPANT">Участник</option>
+        <option value="JUDGE">Судья</option>
+        <option value="ADMIN">Администратор</option>
+      </select>
+    </label>
+    <button type="submit">Зарегистрироваться</button>
+  </form>
+  <p style="text-align:center; margin-top:1rem;">
+    Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a>
+  </p>
+</article>
+{% endblock %}

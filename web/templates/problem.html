@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ problem.title }} — CourseForces{% endblock %}
+{% block content %}
+<a href="{{ url_for('contest', cid=contest_id) }}">← Назад к контесту</a>
+
+<hgroup style="margin-top:1rem;">
+  <h2>{{ problem.title }}</h2>
+  <p>Лимит: {{ problem.time_limit_ms }} мс / {{ problem.memory_limit_mb }} МБ</p>
+</hgroup>
+
+<section>
+  <h3>Условие</h3>
+  <p style="white-space: pre-wrap;">{{ problem.statement }}</p>
+</section>
+
+{% if problem.test_cases %}
+<section>
+  <h3>Примеры</h3>
+  {% for tc in problem.test_cases %}
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+    <div>
+      <strong>Ввод {{ loop.index }}</strong>
+      <pre class="code-block">{{ tc.input }}</pre>
+    </div>
+    <div>
+      <strong>Вывод {{ loop.index }}</strong>
+      <pre class="code-block">{{ tc.expected_output }}</pre>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% endif %}
+
+<section>
+  <h3>Отправить решение (C++)</h3>
+  {% if session.get('user_id') %}
+  <form method="post" enctype="multipart/form-data">
+    <fieldset>
+      <label>Вставить код:
+        <textarea name="code_text" rows="12" placeholder="#include &lt;iostream&gt;&#10;int main() { ... }"></textarea>
+      </label>
+      <label>или загрузить файл:
+        <input type="file" name="code_file" accept=".cpp,.cxx,.cc,.c">
+      </label>
+    </fieldset>
+    <button type="submit">Отправить</button>
+  </form>
+  {% else %}
+  <p><a href="{{ url_for('login') }}">Войдите</a>, чтобы отправить решение.</p>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Новая задача — CourseForces{% endblock %}
+{% block content %}
+<h2>Создать задачу</h2>
+<form method="post">
+  <label>Название
+    <input type="text" name="title" required autofocus>
+  </label>
+  <label>Условие
+    <textarea name="statement" rows="6" required></textarea>
+  </label>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+    <label>Лимит времени (мс)
+      <input type="number" name="time_limit_ms" value="2000" min="100" required>
+    </label>
+    <label>Лимит памяти (МБ)
+      <input type="number" name="memory_limit_mb" value="256" min="16" required>
+    </label>
+  </div>
+
+  <h4>Тест-кейсы</h4>
+  <div id="tests">
+    <div class="test-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:.5rem;">
+      <label>Ввод <textarea name="test_input" rows="3"></textarea></label>
+      <label>Ожидаемый вывод <textarea name="test_output" rows="3"></textarea></label>
+    </div>
+  </div>
+  <button type="button" onclick="addTest()" class="outline">+ Добавить тест</button>
+
+  <hr>
+  <button type="submit">Создать задачу</button>
+</form>
+
+<script>
+function addTest() {
+  var div = document.createElement('div');
+  div.className = 'test-row';
+  div.style = 'display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:.5rem;';
+  div.innerHTML = '<label>Ввод <textarea name="test_input" rows="3"></textarea></label>'
+                + '<label>Ожидаемый вывод <textarea name="test_output" rows="3"></textarea></label>';
+  document.getElementById('tests').appendChild(div);
+}
+</script>
+{% endblock %}
