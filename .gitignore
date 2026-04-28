@@ -5,3 +5,12 @@ build/
 .idea/
 *.o
 *.obj
+.claude/
+Testing/
+web/__pycache__/
+__pycache__/
+*.pyc
+gen_pz.py
+*.docx
+courseforces_server
+courseforces_tests
